@@ -1,13 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Using OpenLayers with Vite</title>
-  </head>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- 웹 페이지 이름 삽입 -->
+  <title>전국 캠핑장 웹 공간정보시스템</title>
+  <link rel="stylesheet" href="node_modules/ol/ol.css">
+  <!-- 구글 링크 붙여넣기 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
   <body>
-    <div id="map"></div>
+    <div class="container">
+      <!-- 웹 페이지 제목 부분 작성 -->
+      <div id="header">
+        <div class="topDecal"></div>
+        <div id="campsiteLogo"></div>
+        <!-- <h1> 전국 캠핑장 웹 공간정보시스템</h1> -->
+      </div> <!-- header 닫힘 -->
+      <br>
+      <!-- 컨텐츠 부분을 메뉴 1, 메뉴 2, 지도로 3 부분으로 나눌 예정 -->
+      <div id="contents">
+        <div id="menu1">
+          <div class="contents1">
+            <h3> 캠핑장 지도</h3>
+            <p> 전국 캠핑장 위치를 확인하실 수 있습니다.</p>
+          </div>
+          <br>
+          <div class="contents2">
+            <h3> 테마별 검색</h3>
+            <ul class="campsiteList">
+              <!-- &middot;은 글자 중간에 가운데 점을 찍는 html 특수문자  -->
+              <li> <span id="sido01">서울&middot;경기&middot;인천</span></li>
+              <li> <span id="sido02">대전&middot;충남&middot;충북&middot;세종</span></li>
+              <li> <span id="sido03">강원도</span></li>
+              <li> <span id="sido04">대구&middot;경북</span></li>
+              <li> <span id="sido05">부산&middot;울산&middot;경남</span></li>
+              <li> <span id="sido06">전북</span></li>
+              <li> <span id="sido07">전남&middot;광주</span></li>
+              <li> <span id="sido08">제주도</span></li>
+            </ul>
+          </div>
+          <br>
+          <div class="contents3">
+            <h3> 업종별 검색</h3>
+            <ul class="campsiteList">
+              <li> <span id="induty01">일반야영장</span></li>
+              <li> <span id="induty02">자동차야영장</span></li>
+              <li> <span id="induty03">글램핑</span></li>
+              <li> <span id="induty04">카라반</span></li>
+            </ul>
+          </div>
+          <br>
+          <div class="contents4">
+            <h3> 테마별 검색</h3>
+            <ul class="campsiteList">
+              <li> <span id="theme01">가을단풍명소</span></li>
+              <li> <span id="theme02">걷기길</span></li>
+              <li> <span id="theme03">겨울눈꽃명소</span></li>
+              <li> <span id="theme04">낚시</span></li>
+              <li> <span id="theme05">봄꽃여행</span></li>
+              <li> <span id="theme06">수상레저</span></li>
+              <li> <span id="theme07">스키</span></li>
+              <li> <span id="theme08">액티비티</span></li>
+              <li> <span id="theme09">여름물놀이</span></li>
+              <li> <span id="theme10">일몰명소</span></li>
+              <li> <span id="theme11">일출명소</span></li>
+              <li> <span id="theme12">항공레저</span></li>
+            </ul>
+          </div>
+
+
+        </div> <!-- menu1 닫힘 -->
+        <div id="menu2">
+          <div class="contents1">
+            <h3> 통합 검색</h3>
+            <p> 통합검색을 하실 수 있습니다.</p>
+            <table class="campsiteTable">
+              <tr>
+                <th>운영 여부</th>
+                <td>
+                  <input type="checkbox" id="run01" value="운영">
+                  <label for="run01">운영&nbsp;&nbsp;&nbsp;</label>
+                  <input type="checkbox" id="run02" value="휴장">
+                  <label for="run02">휴장</label>
+                </td>
+              </tr>
+              <tr>
+                <th> 업종 </th>
+                <td>
+                  <input type="checkbox" id="field01" value="일반야영장">
+                  <label for="field01">일반야영장</label>
+                  <input type="checkbox" id="field02" value="자동차야영장">
+                  <label for="field02">자동차야영장</label>
+                  <input type="checkbox" id="field03" value="글램핑">
+                  <label for="field03">글램핑</label>
+                  <input type="checkbox" id="field04" value="카라반">
+                  <label for="field04">카라반</label>
+                </td>
+              </tr>
+              <tr>
+                <th>애완견 동반</th>
+                <td>
+                  <input type="checkbox" name="animalcmgcl" id="animal01" value="가능">
+                  <label for="animal01">가능 &nbsp;&nbsp;&nbsp;</label>
+                  <input type="checkbox" name="animalcmgcl" id="animal02" value="가능(소형견)">
+                  <label for="animal02">가능(소형견)</label><br>
+                  <input type="checkbox" name="animalcmgcl" id="animal03" value="불가능">
+                  <label for="animal03">불가능 &nbsp;&nbsp;&nbsp;</label>
+                </td>
+              </tr>
+              <tr>
+                <th>조리대</th>
+                <td>
+                  <input type="checkbox" name="brazierco" id="brazierco1" value="개별">
+                  <label for="brazierco1">개별 &nbsp;&nbsp;&nbsp;</label>
+                  <input type="checkbox" name="brazierco" id="brazierco2" value="공동취사장">
+                  <label for="brazierco2">공동취사장</label><br>
+                  <input type="checkbox" name="brazierco" id="brazierco3" value="불가능">
+                  <label for="brazierco3">불가능 &nbsp;&nbsp;&nbsp;</label>
+                </td>
+              </tr>
+              <tr>
+                <th>사이트 개수</th>
+                <td>
+                  <input type="radio" name = "numsite" id="gnlsiteco" value="일반">
+                  <label for="gnlsiteco">일반 &nbsp;&nbsp;&nbsp;</label>
+                  <input type="radio" name = "numsite" id="autositeco" value="자동차">
+                  <label for="autositeco">자동차 &nbsp;&nbsp;&nbsp;</label><br>
+                  <input type="radio" name = "numsite" id="glampsiteco" value="글램핑">
+                  <label for="glampsiteco">글램핑 &nbsp;&nbsp;&nbsp;</label>
+                  <input type="radio" name = "numsite" id="caravsiteco" value="카라반">
+                  <label for="caravsiteco">카라반 &nbsp;&nbsp;&nbsp;</label><br>
+                  <input type="radio" name = "numsite" id="indvdlcaravsiteco" value="개인카라반">
+                  <label for="indvdlcaravsiteco">개인카라반 &nbsp;&nbsp;&nbsp;</label>
+                  <input type="range" min="0" max="150" id = "num" value="50" step="1" >
+                </td>
+              </tr>
+            </table>
+          </div>
+
+
+        </div> <!-- menu2 닫힘 -->
+        <div id="mapArea">
+          <div id="map">
+            <div id="info"></div>
+          </div>
+        </div> <!-- mapArea 닫힘 -->
+      </div> <!-- contents 닫힘 -->
+    </div> <!-- container 닫힘 -->
+    <div id="popup"> <!-- 팝업 모양 정의 -->
+      <a href="" id="campinfo_link" target="_blank"><h3 id="info-title"></h3></a>
+      <img id="firstimage" width="390px">
+      <br>
+      <span id="lineintro"></span>
+    </div>
+
     <script type="module" src="./main.js"></script>
   </body>
+
 </html>
